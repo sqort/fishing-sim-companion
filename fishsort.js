@@ -2260,6 +2260,30 @@ function getCheckboxStatuses() {
 
 const container = document.querySelector('.custom-container');
 
+const ctx = document.getElementById('fishChart').getContext('2d');
+    const barChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Value'],
+            datasets: [{
+                label: 'Fish Caught',
+                data: [fishCaught],
+                backgroundColor: 'rgba(75, 192, 192, 0.2)', // Set the bar color
+                borderColor: 'rgba(75, 192, 192, 1)', // Set the border color
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+
+
 
 function addFishToChart(loc){
   fishCaught = `${fishCaught}` + `${loc}`;
@@ -2272,6 +2296,24 @@ function removeFishFromChart(loc){
   return fishCaught;
 }
 
+function addBar(barName) {
+  const newData = fishCaught;
+  // Create a unique label for the new bar
+  const newLabel = barName;
+
+  // Add the new data and label to the chart
+  barChart.data.labels.push(newLabel);
+  barChart.data.datasets.push({
+      label: newLabel,
+      data: [newData],
+      backgroundColor: 'rgba(75, 192, 192, 0.2)',
+      borderColor: 'rgba(75, 192, 192, 1)',
+      borderWidth: 1
+  });
+
+  // Update the chart
+  barChart.update();
+}
 
 function loadData(location, sublocation){
     container.innerHTML = "";
@@ -2347,8 +2389,7 @@ function loadData(location, sublocation){
           }
           
           // Update the chart with the new value
-          barChart.data.datasets[0].data[0] = fishCaughtPJ;
-          barChart.update();
+          addBar(location);
       });
     }
     
@@ -2411,28 +2452,6 @@ function loadData(location, sublocation){
     }
   }
 }
-
-const ctx = document.getElementById('fishChart').getContext('2d');
-    const barChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Value'],
-            datasets: [{
-                label: 'Fish Caught',
-                data: [fishCaught],
-                backgroundColor: 'rgba(75, 192, 192, 0.2)', // Set the bar color
-                borderColor: 'rgba(75, 192, 192, 1)', // Set the border color
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
 
 
 locationDropdown.addEventListener('change', () => {
