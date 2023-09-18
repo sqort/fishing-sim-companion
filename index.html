@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Fishing Simulator Companion</title>
+<style>
+    #list
+    {
+        border-color: black;
+        background-color: black;
+        color: white;
+    }
+    select 
+    {
+        padding: 10px; /* Adjust padding as needed */
+        border: 2px solid #444; /* Border color */
+        background-color: #333; /* Background color */
+        color: #fff; /* Text color */
+        border-radius: 10px; /* Rounded corners */
+        appearance: none; /* Remove default arrow in some browsers */
+        -webkit-appearance: none; /* Remove default arrow in Safari */
+        -moz-appearance: none; /* Remove default arrow in Firefox */
+        margin: 10px;
+    }
+
+    /* Style the dropdown arrow (use an arrow icon) */
+    select::-ms-expand {
+        display: none; /* Hide the default arrow in IE */
+    }
+
+    /* Add hover effect */
+    select:hover {
+        background-color: #555;
+        border-color: #555;
+    }
+
+    /* Style the options */
+    option {
+        background-color: #333;
+        color: #fff;
+    }
+    body
+    {
+        background-color: rgb(42, 42, 46);
+        color: white;
+    }
+    #content-div
+    {
+        color: white;
+    }
+    .custom-container {
+        background-color: #333;
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+        color: white;
+        width: 300px;
+        margin: 0 auto;
+    }
+
+    .checkbox-label {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    input[type="checkbox"] {
+        margin-right: 5px;
+    }
+
+    .bottom-label {
+        margin-top: 20px;
+    }
+    .fish-div{
+        background-color: #181717;
+        border-radius: 10px;
+        padding: 10px;
+        text-align: center;
+        color: white;
+        margin: 10px;
+    }
+    .mutation-div{
+        background-color: #181717;
+        border-radius: 10px;
+        padding: 10px;
+        text-align: center;
+        color: white;
+        margin: 0 auto;
+    }
+    .common{
+        color: rgb(185, 185, 185);
+    }
+
+    .uncommon{
+        color: rgb(102, 102, 102);
+    }
+    .rare{
+        color: rgb(86, 219, 97);
+    }
+    .epic{
+        color: rgb(219, 184, 28);
+    }
+    .legendary{
+        color: rgb(231, 17, 53);
+    }
+    .mythic{
+        color: rgb(240, 42, 157);
+    }
+</style>
+</head>
+
+<body>
+
+<center>
+<img src="https://static.wikia.nocookie.net/fishingsimulator/images/e/e6/Site-logo.png">
+<h1>Companion!</h1>
+<h2>This site is a WORK IN PROGRESS!</h2>
+<div>please DM sqort on discord if there are any bugs you encounter</div>
+    <select id="dropdown">
+        <option value="default">Select a Location</option>
+        <option value="option1">Port Jackson: Outer Waters</option>
+        <option value="option2">Port Jackson: SFA</option>
+        <option value="option3">Eruption Isles: Outer Waters</option>
+        <option value="option4">Eruption Isles: Magma</option>
+        <option value="option5">Eruption Isles: SFA</option>
+        <option value="option6">Shadow Isles: Outer Waters</option>
+        <option value="option7">Shadow Isles: SFA</option>
+        <option value="option8">Ancient Shores: Outer Waters</option>
+        <option value="option9">Ancient Shores: The River</option>
+        <option value="option10">Ancient Shores: SFA</option>
+        <option value="option11">Pharaoh's Dunes: Outer Waters</option>
+        <option value="option12">Pharaoh's Dunes: Oasis</option>
+        <option value="option13">Pharaoh's Dunes: SFA</option>
+        <option value="option14">Ocean: Clear Skies</option>
+        <option value="option15">Ocean: Overcast</option>
+        <option value="option16">Ocean: Rain</option>
+        <option value="option17">Ocean: Thunderstorm</option>
+        <option value="option18">Ocean: Void Storm</option>
+        <option value="option19">Ocean: Void Pond</option>
+        <option value="option20">Monster's Borough: Normal</option>
+        <option value="option21">Monster's Borough: Candy Bait</option>
+    </select>
+    
+    <div id="content-div">
+    
+    </div>
+
+    <div class="custom-container">
+    </div>
+</center>
+<br>
+
+<script src="fishsort.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+
+</html>
