@@ -2233,7 +2233,7 @@ let fishingLocations = [
   "Ocean"
 ]
 
-
+let fishCaught = 0;
 const locationDropdown = document.getElementById("dropdown");
 
 // Function to set a single cookie with checkbox statuses
@@ -2262,12 +2262,12 @@ const container = document.querySelector('.custom-container');
 
 
 function addFishToChart(loc){
-  let fishCaught = `${fishCaught}` + `${loc}`;
+  fishCaught = `${fishCaught}` + `${loc}`;
   fishCaught++;
   return fishCaught;
 }
 function removeFishFromChart(loc){
-  let fishCaught = `${fishCaught}` + `${loc}`;
+  fishCaught = `${fishCaught}` + `${loc}`;
   fishCaught--;
   return fishCaught;
 }
