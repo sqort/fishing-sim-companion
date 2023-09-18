@@ -2223,6 +2223,17 @@ mutations: {
     
     }
 
+let fishingLocations = [
+  "Port Jackson",
+  "Eruption Isles",
+  "Shadow Isles",
+  "Ancient Shores",
+  "Pharaoh's Dunes",
+  "Monster's Borough",
+  "Ocean"
+]
+
+
 const locationDropdown = document.getElementById("dropdown");
 
 // Function to set a single cookie with checkbox statuses
@@ -2245,9 +2256,22 @@ function getCheckboxStatuses() {
     return {};
   }
 
+
+
 const container = document.querySelector('.custom-container');
 
-let fishCaught = 0;
+
+function addFishToChart(loc){
+  let fishCaught = `${fishCaught}` + `${loc}`;
+  fishCaught++;
+  return fishCaught;
+}
+function removeFishFromChart(loc){
+  let fishCaught = `${fishCaught}` + `${loc}`;
+  fishCaught--;
+  return fishCaught;
+}
+
 
 function loadData(location, sublocation){
     container.innerHTML = "";
@@ -2316,14 +2340,14 @@ function loadData(location, sublocation){
           // Check if the checkbox is checked
           if (checkbox.checked) {
               // Increase the value by one
-              fishCaught++;
+              addFishToChart(location);
           } else {
               // Decrease the value by one if the checkbox is unchecked
-              fishCaught--;
+              removeFishFromChart(location);
           }
           
           // Update the chart with the new value
-          barChart.data.datasets[0].data[0] = fishCaught;
+          barChart.data.datasets[0].data[0] = fishCaughtPJ;
           barChart.update();
       });
     }
