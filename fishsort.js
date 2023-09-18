@@ -2465,25 +2465,34 @@ locationDropdown.addEventListener('change', () => {
 });
 
 
-// Function to calculate the number of checked checkboxes in a location
-function countCheckedCheckboxes(locationName) {
-  let count = 0;
-  const location = fish[locationName];
 
-  for (const locationKey in location) {
-    const fishObject = location[locationKey];
-    const checkboxes = Object.values(fishObject.mutations)
-      .flatMap((sizes) => sizes.map((size) => `${fishObject.fishName}-Mutations-${size}`));
-
-    count += checkboxes.filter((checkbox) => checkboxStatuses[checkbox]).length;
-  }
-
-  return count;
-}
 
 // Initial data for the chart
 const locationNames = Object.keys(fish);
+
+function countCheckedCheckboxes(locationName) {
+  const location = fish[locationName];
+
+  if (location) {
+    let count = 0;
+
+    for (const locationKey in location) {
+      const fishObject = location[locationKey];
+      const checkboxes = Object.values(fishObject.mutations)
+        .flatMap((sizes) => sizes.map((size) => `${fishObject.fishName}-Mutations-${size}`));
+
+      count += checkboxes.filter((checkbox) => checkboxStatuses[checkbox]).length;
+    }
+
+    return count;
+  } else {
+    return 0; // Handle the case where the location doesn't exist
+  }
+}
+
+
 const initialData = locationNames.map((locationName) => countCheckedCheckboxes(locationName));
+
 
 const ctx = document.getElementById('fishChart').getContext('2d');
 const chart = new Chart(ctx, {
