@@ -2392,9 +2392,6 @@ function loadData(location, sublocation){
 }
     
 
-
-
-
 const locationDropdown = document.getElementById("dropdown");
 
 locationDropdown.addEventListener('change', () => {
@@ -2465,4 +2462,64 @@ locationDropdown.addEventListener('change', () => {
   else if (selectedValue === 'default') {
     container.innerHTML = "";
   }
+});
+
+
+// Function to calculate the number of checked checkboxes in a location
+function countCheckedCheckboxes(locationName) {
+  let count = 0;
+  const location = fish[locationName];
+
+  for (const locationKey in location) {
+    const fishObject = location[locationKey];
+    const checkboxes = Object.values(fishObject.mutations)
+      .flatMap((sizes) => sizes.map((size) => `${fishObject.fishName}-Mutations-${size}`));
+
+    count += checkboxes.filter((checkbox) => checkboxStatuses[checkbox]).length;
+  }
+
+  return count;
+}
+
+// Initial data for the chart
+const locationNames = Object.keys(fish);
+const initialData = locationNames.map((locationName) => countCheckedCheckboxes(locationName));
+
+const ctx = document.getElementById('fishChart').getContext('2d');
+const chart = new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: locationNames,
+    datasets: [{
+      label: 'Variations Caught',
+      data: initialData,
+      backgroundColor: 'rgba(75, 192, 192, 0.2)',
+      borderColor: 'rgba(75, 192, 192, 1)',
+      borderWidth: 1,
+    }],
+  },
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true,
+        title: {
+          display: true,
+          text: 'Variations Caught',
+        },
+      },
+    },
+  },
+});
+
+// Update the chart whenever a checkbox is clicked
+function updateChart() {
+  const newData = locationNames.map((locationName) => countCheckedCheckboxes(locationName));
+  chart.data.datasets[0].data = newData;
+  chart.update();
+}
+
+// Attach a click event listener to all checkboxes to trigger chart update
+const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+checkboxes.forEach((checkbox) => {
+  checkbox.addEventListener('click', updateChart);
 });
