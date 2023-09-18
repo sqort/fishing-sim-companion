@@ -9,17 +9,17 @@ let fish = {
                      
                     midas: ["Yes","No"],
 
-mutations: {
-          "Normal": ["Regular", "Baby", "Small", "Large", "Huge"],
-          "Common Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
-          "Uncommon Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
-          "Rare Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
-          "Epic Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
-          "Legendary Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
-          "Mythic Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
-          "Albino": ["Regular", "Baby", "Small", "Large", "Huge"],
-        }
-                },
+                    mutations: {
+                              "Normal": ["Regular", "Baby", "Small", "Large", "Huge"],
+                              "Common Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                              "Uncommon Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                              "Rare Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                              "Epic Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                              "Legendary Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                              "Mythic Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                              "Albino": ["Regular", "Baby", "Small", "Large", "Huge"],
+                            }
+                        },
                 "Copperband Butterflyfish":{
                     fishName: "Copperband Butterflyfish",
                      
@@ -2223,22 +2223,7 @@ mutations: {
     
     }
 
-let fishSizes = [
-    "Regular",
-    "Baby",
-    "Small",
-    "Large",
-    "Huge"
-]
-
-let fishMuts = [
-    "Common",
-    "Uncommon",
-    "Rare",
-    "Epic",
-    "Legendary",
-    "Mythic"
-]
+const locationDropdown = document.getElementById("dropdown");
 
 // Function to set a single cookie with checkbox statuses
 function setCheckboxCookie(checkboxStatuses) {
@@ -2262,13 +2247,7 @@ function getCheckboxStatuses() {
 
 const container = document.querySelector('.custom-container');
 
-function createNewCheckbox(name, id){
-    var checkbox = document.createElement('input'); 
-    checkbox.type= 'checkbox';
-    checkbox.name = name;
-    checkbox.id = id;
-    return checkbox;
-}
+let fishCaught = 0;
 
 function loadData(location, sublocation){
     container.innerHTML = "";
@@ -2323,14 +2302,30 @@ function loadData(location, sublocation){
   
   
             // Check the checkbox based on the stored checkbox statuses
-        const checkboxKey = `${fishName}-${mutationName}-${size}`;
-        checkbox.checked = checkboxStatuses[checkboxKey] === true;
+          const checkboxKey = `${fishName}-${mutationName}-${size}`;
+          checkbox.checked = checkboxStatuses[checkboxKey] === true;
   
             // Add a click event listener to update the checkbox statuses and the cookie
             checkbox.addEventListener("click", function () {
               checkboxStatuses[checkboxKey] = checkbox.checked;
               setCheckboxCookie(checkboxStatuses);
             });
+
+            // Add an event listener to the checkbox
+          checkbox.addEventListener('change', function() {
+          // Check if the checkbox is checked
+          if (checkbox.checked) {
+              // Increase the value by one
+              fishCaught++;
+          } else {
+              // Decrease the value by one if the checkbox is unchecked
+              fishCaught--;
+          }
+          
+          // Update the chart with the new value
+          barChart.data.datasets[0].data[0] = value;
+          barChart.update();
+      });
     }
     
 
@@ -2386,13 +2381,35 @@ function loadData(location, sublocation){
     setCheckboxCookie(checkboxStatuses);
     });
 
+    
+
     container.appendChild(clonedDiv);
     }
   }
 }
-    
 
-const locationDropdown = document.getElementById("dropdown");
+const ctx = document.getElementById('fishChart').getContext('2d');
+    const barChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Value'],
+            datasets: [{
+                label: 'Value',
+                data: [fishCaught],
+                backgroundColor: 'rgba(75, 192, 192, 0.2)', // Set the bar color
+                borderColor: 'rgba(75, 192, 192, 1)', // Set the border color
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
 
 locationDropdown.addEventListener('change', () => {
   const selectedValue = locationDropdown.value;
@@ -2464,71 +2481,3 @@ locationDropdown.addEventListener('change', () => {
   }
 });
 
-
-
-
-// Initial data for the chart
-const locationNames = Object.keys(fish);
-
-function countCheckedCheckboxes(locationName) {
-  const location = fish[locationName];
-
-  if (location) {
-    let count = 0;
-
-    for (const locationKey in location) {
-      const fishObject = location[locationKey];
-      const checkboxes = Object.values(fishObject.mutations)
-        .flatMap((sizes) => sizes.map((size) => `${fishObject.fishName}-Mutations-${size}`));
-
-      count += checkboxes.filter((checkbox) => checkboxStatuses[checkbox]).length;
-    }
-
-    return count;
-  } else {
-    return 0; // Handle the case where the location doesn't exist
-  }
-}
-
-
-const initialData = locationNames.map((locationName) => countCheckedCheckboxes(locationName));
-
-
-const ctx = document.getElementById('fishChart').getContext('2d');
-const chart = new Chart(ctx, {
-  type: 'bar',
-  data: {
-    labels: locationNames,
-    datasets: [{
-      label: 'Variations Caught',
-      data: initialData,
-      backgroundColor: 'rgba(75, 192, 192, 0.2)',
-      borderColor: 'rgba(75, 192, 192, 1)',
-      borderWidth: 1,
-    }],
-  },
-  options: {
-    scales: {
-      y: {
-        beginAtZero: true,
-        title: {
-          display: true,
-          text: 'Variations Caught',
-        },
-      },
-    },
-  },
-});
-
-// Update the chart whenever a checkbox is clicked
-function updateChart() {
-  const newData = locationNames.map((locationName) => countCheckedCheckboxes(locationName));
-  chart.data.datasets[0].data = newData;
-  chart.update();
-}
-
-// Attach a click event listener to all checkboxes to trigger chart update
-const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-checkboxes.forEach((checkbox) => {
-  checkbox.addEventListener('click', updateChart);
-});
