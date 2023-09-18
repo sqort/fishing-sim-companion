@@ -2323,7 +2323,7 @@ function loadData(location, sublocation){
           }
           
           // Update the chart with the new value
-          barChart.data.datasets[0].data[0] = value;
+          barChart.data.datasets[0].data[0] = fishCaught;
           barChart.update();
       });
     }
@@ -2394,7 +2394,7 @@ const ctx = document.getElementById('fishChart').getContext('2d');
         data: {
             labels: ['Value'],
             datasets: [{
-                label: 'Value',
+                label: 'Fish Caught',
                 data: [fishCaught],
                 backgroundColor: 'rgba(75, 192, 192, 0.2)', // Set the bar color
                 borderColor: 'rgba(75, 192, 192, 1)', // Set the border color
