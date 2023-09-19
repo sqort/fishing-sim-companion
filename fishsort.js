@@ -2232,31 +2232,42 @@ function setCheckboxStatuses(checkboxStatuses) {
   localStorage.setItem("checkboxStatuses", JSON.stringify(checkboxStatuses));
 }
 
-// Function to get checkbox statuses from localStorage
 function getCheckboxStatuses() {
   const storedData = localStorage.getItem("checkboxStatuses");
-  return JSON.parse(storedData) || {}; // Return an empty object if no data is found
+  return JSON.parse(storedData) || {};
 }
 
-
-
-const container = document.querySelector('.custom-container');
-
-// Function to check all checkboxes in a specified div and update localStorage
-function checkAllCheckboxesInDivAndSave(divId) {
-  const div = document.getElementById(divId);
-  const checkboxes = div.querySelectorAll("input[type='checkbox']");
-  checkboxes.forEach((checkbox) => {
-    checkbox.checked = true;
-  });
-
-  // Update checkbox statuses in localStorage
+// Function to check or uncheck a specific checkbox and update localStorage
+function toggleCheckboxAndSave(checkbox) {
   const checkboxStatuses = getCheckboxStatuses();
-  checkboxes.forEach((checkbox) => {
-    checkboxStatuses[checkbox.name] = true;
-  });
+  const checkboxId = checkbox.id;
+  checkboxStatuses[checkboxId] = checkbox.checked;
   setCheckboxStatuses(checkboxStatuses);
 }
+
+// Attach an event listener to each checkbox to handle changes
+const checkboxes = document.querySelectorAll("input[type='checkbox']");
+checkboxes.forEach((checkbox) => {
+  checkbox.addEventListener("change", function () {
+    toggleCheckboxAndSave(checkbox);
+  });
+});
+
+function createCheckAllButton(mutationDiv, fishName) {
+  const checkAllButton = document.createElement("button");
+  checkAllButton.className = "tickallbutton";
+  checkAllButton.addEventListener("click", function () {
+    const checkboxes = mutationDiv.querySelectorAll("input[type='checkbox']");
+    checkboxes.forEach((checkbox) => {
+      checkbox.checked = true;
+      toggleCheckboxAndSave(checkbox); // Update localStorage for each checkbox
+    });
+  });
+
+  mutationDiv.appendChild(checkAllButton);
+}
+
+const container = document.querySelector('.custom-container');
 
 
 const ctx = document.getElementById('fishChart').getContext('2d');
@@ -2402,6 +2413,7 @@ const ctx = document.getElementById('fishChart').getContext('2d');
           const mutationDiv = document.createElement("div");
           mutationDiv.appendChild(document.createTextNode("Mutations")); // Name for the mutation group
           mutationDiv.appendChild(document.createElement("br")); // Add a line break for spacing
+
           
           // Iterate through the mutations for the current fish
           for (const mutationName in fishObject.mutations) {
@@ -2409,13 +2421,10 @@ const ctx = document.getElementById('fishChart').getContext('2d');
                 const mutationSizes = fishObject.mutations[mutationName];
                 const mutationDiv = document.createElement("div");
                 mutationDiv.appendChild(document.createTextNode(mutationName));
+                createCheckAllButton(mutationDiv, fishName);
                 mutationDiv.id = "mutDiv" + mutationName + fishName;
                 mutationDiv.appendChild(document.createElement("br")); // Add a line break for spacing
-                const checkButton = document.createElement("button");
-                checkButton.className = "tickallbutton";
-                checkButton.addEventListener("click", function () {
-                  checkAllCheckboxesInDivAndSave("mutDiv" + mutationName + fishName);
-                });
+                
                 
                 // Iterate through the sizes for the current mutation
                 for (const size of mutationSizes) {
@@ -2434,13 +2443,11 @@ const ctx = document.getElementById('fishChart').getContext('2d');
                 const checkboxKey = `${fishName}-${mutationName}-${size}`;
                 checkbox.checked = checkboxStatuses[checkboxKey] === true;
         
-                  // Add a click event listener to update the checkbox statuses and the cookie
-                  checkbox.addEventListener("click", function () {
-                    checkboxStatuses[checkboxKey] = checkbox.checked;
-                    setCheckboxStatuses(checkboxStatuses);
-                  });
+                checkbox.addEventListener("click", function () {
+                  toggleCheckboxAndSave(checkbox); // Update localStorage for this checkbox
+                });
                 mutationDiv.appendChild(document.createElement("br"));
-                mutationDiv.appendChild(checkButton);
+                
           }
           
       
@@ -2493,7 +2500,7 @@ const ctx = document.getElementById('fishChart').getContext('2d');
           // Add a click event listener to update the checkbox statuses and the cookie for "Midas" checkbox
           midasCheckbox.addEventListener("click", function () {
           checkboxStatuses[midasCheckboxKey] = midasCheckbox.checked;
-          setCheckboxCookie(checkboxStatuses);
+          setCheckboxStatuses(checkboxStatuses);
           });
       
           
@@ -2679,3 +2686,21 @@ const ctx = document.getElementById('fishChart').getContext('2d');
           updateBarsFromCheckboxes();
         }
       });
+
+      // Function to save the selected option to localStorage
+      function saveSelectedOption() {
+        const selectedOption = locationDropdown.value;
+        localStorage.setItem("selectedOption", selectedOption);
+    }
+
+    // Function to load the selected option from localStorage
+    function loadSelectedOption() {
+        const selectedOption = localStorage.getItem("selectedOption");
+        if (selectedOption) {
+          locationDropdown.value = selectedOption;
+        }
+    }
+
+    // Attach event listeners to save and load the selected option
+    dropdown.addEventListener("change", saveSelectedOption);
+    window.addEventListener("load", loadSelectedOption);
