@@ -2836,3 +2836,24 @@ checkboxes.forEach((checkbox) => {
 
     dropdown.addEventListener("change", saveSelectedOption);
     window.addEventListener("load", loadSelectedOption);
+
+
+    const commitLogDiv = document.getElementById('commit-log');
+        const username = 'sqort';
+        const repository = 'fishing-sim-companion';
+
+        
+        fetch(`https://api.github.com/repos/${username}/${repository}/commits`)
+            .then(response => response.json())
+            .then(data => {
+                
+                const commits = data.map(commit => {
+                    return `<p><strong>${commit.commit.author.name}</strong> - ${commit.commit.message}</p>`;
+                });
+
+                commitLogDiv.innerHTML = commits.join('');
+            })
+            .catch(error => {
+                console.error('Error fetching commit data:', error);
+                commitLogDiv.innerHTML = '<p>Error fetching commit data.</p>';
+            });
