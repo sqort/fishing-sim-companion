@@ -2838,18 +2838,46 @@ checkboxes.forEach((checkbox) => {
     window.addEventListener("load", loadSelectedOption);
 
 
+    
+
     const commitLogDiv = document.getElementById('commit-log');
+        const toggleButton = document.getElementById('toggle-button');
         const username = 'sqort';
         const repository = 'fishing-sim-companion';
 
+        let commitLogVisible = false;
+
+        // Function to toggle commit log visibility
+        function toggleCommitLog() {
+            if (commitLogVisible) {
+                commitLogDiv.style.display = 'none';
+                toggleButton.innerText = 'Show Commit Log';
+            } else {
+                commitLogDiv.style.display = 'block';
+                toggleButton.innerText = 'Hide Commit Log';
+            }
+            commitLogVisible = !commitLogVisible;
+        }
+
+        toggleButton.addEventListener('click', toggleCommitLog);
+
+        function formatTimestamp(timestamp) {
+          const date = new Date(timestamp);
+          return date.toLocaleString(); // Format the timestamp as a readable string
+      }
         
         fetch(`https://api.github.com/repos/${username}/${repository}/commits`)
             .then(response => response.json())
             .then(data => {
                 
-                const commits = data.map(commit => {
-                    return `<p><strong>${commit.commit.author.name}</strong> - ${commit.commit.message}</p>`;
-                });
+              const commits = data.map(commit => {
+                const author = commit.commit.author.name;
+                const message = commit.commit.message;
+                const timestamp = commit.commit.author.date; // Get the commit's timestamp
+                const formattedTimestamp = formatTimestamp(timestamp);
+
+                return `<p><strong>${author}</strong> - ${message}<br>${formattedTimestamp}</p>`;
+            });
 
                 commitLogDiv.innerHTML = commits.join('');
             })
