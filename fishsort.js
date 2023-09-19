@@ -2409,12 +2409,12 @@ const ctx = document.getElementById('fishChart').getContext('2d');
                 const mutationSizes = fishObject.mutations[mutationName];
                 const mutationDiv = document.createElement("div");
                 mutationDiv.appendChild(document.createTextNode(mutationName));
-                mutationDiv.id = "mutDiv" + mutationName;
+                mutationDiv.id = "mutDiv" + mutationName + fishName;
                 mutationDiv.appendChild(document.createElement("br")); // Add a line break for spacing
                 const checkButton = document.createElement("button");
                 checkButton.className = "tickallbutton";
                 checkButton.addEventListener("click", function () {
-                  checkAllCheckboxesInDivAndSave("mutDiv" + mutationName);
+                  checkAllCheckboxesInDivAndSave("mutDiv" + mutationName + fishName);
                 });
                 
                 // Iterate through the sizes for the current mutation
