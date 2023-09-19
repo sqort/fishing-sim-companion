@@ -2242,12 +2242,20 @@ function getCheckboxStatuses() {
 
 const container = document.querySelector('.custom-container');
 
-function checkAllCheckboxesInDiv(divId) {
+// Function to check all checkboxes in a specified div and update localStorage
+function checkAllCheckboxesInDivAndSave(divId) {
   const div = document.getElementById(divId);
   const checkboxes = div.querySelectorAll("input[type='checkbox']");
   checkboxes.forEach((checkbox) => {
     checkbox.checked = true;
   });
+
+  // Update checkbox statuses in localStorage
+  const checkboxStatuses = getCheckboxStatuses();
+  checkboxes.forEach((checkbox) => {
+    checkboxStatuses[checkbox.name] = true;
+  });
+  setCheckboxStatuses(checkboxStatuses);
 }
 
 
@@ -2395,10 +2403,6 @@ const ctx = document.getElementById('fishChart').getContext('2d');
           mutationDiv.appendChild(document.createTextNode("Mutations")); // Name for the mutation group
           mutationDiv.appendChild(document.createElement("br")); // Add a line break for spacing
           
-          // Create a button to tick all boxed for a group so ur fingers don't hurt LOL
-          
-          
-
           // Iterate through the mutations for the current fish
           for (const mutationName in fishObject.mutations) {
               if (fishObject.mutations.hasOwnProperty(mutationName)) {
@@ -2410,7 +2414,7 @@ const ctx = document.getElementById('fishChart').getContext('2d');
                 const checkButton = document.createElement("button");
                 checkButton.className = "tickallbutton";
                 checkButton.addEventListener("click", function () {
-                  checkAllCheckboxesInDiv("mutDiv" + mutationName);
+                  checkAllCheckboxesInDivAndSave("mutDiv" + mutationName);
                 });
                 
                 // Iterate through the sizes for the current mutation
