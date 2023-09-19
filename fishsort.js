@@ -2288,6 +2288,7 @@ const ctx = document.getElementById('fishChart').getContext('2d');
                 label: 'Fish Caught',
                 data: [],
                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                color: 'rgba(255, 255, 255, 1)',
                 borderColor: 'rgba(75, 192, 192, 1)',
                 borderWidth: 1
             }]
