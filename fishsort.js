@@ -2226,8 +2226,6 @@ mutations: {
 let fishCaught = 0;
 const locationDropdown = document.getElementById("dropdown");
 
-// Function to set a single cookie with checkbox statuses
-// Function to set checkbox statuses in localStorage
 function setCheckboxStatuses(checkboxStatuses) {
   localStorage.setItem("checkboxStatuses", JSON.stringify(checkboxStatuses));
 }
@@ -2237,7 +2235,7 @@ function getCheckboxStatuses() {
   return JSON.parse(storedData) || {};
 }
 
-// Function to check or uncheck a specific checkbox and update localStorage
+
 function toggleCheckboxAndSave(checkbox) {
   const checkboxStatuses = getCheckboxStatuses();
   const checkboxId = checkbox.id;
@@ -2245,13 +2243,6 @@ function toggleCheckboxAndSave(checkbox) {
   setCheckboxStatuses(checkboxStatuses);
 }
 
-// Attach an event listener to each checkbox to handle changes
-const checkboxes = document.querySelectorAll("input[type='checkbox']");
-checkboxes.forEach((checkbox) => {
-  checkbox.addEventListener("change", function () {
-    toggleCheckboxAndSave(checkbox);
-  });
-});
 
 function createCheckAllButton(mutationDiv, fishName) {
   const checkAllButton = document.createElement("button");
@@ -2265,6 +2256,25 @@ function createCheckAllButton(mutationDiv, fishName) {
   });
 
   mutationDiv.appendChild(checkAllButton);
+}
+function createCheckAllForFishButton(fishDiv) {
+  const checkAllButton = document.createElement("button");
+  checkAllButton.className = "tickallbutton";
+  checkAllButton.addEventListener("click", function () {
+    const checkboxes = fishDiv.querySelectorAll("input[type='checkbox']");
+    checkboxes.forEach((checkbox) => {
+      if(checkbox.id.includes("Midas")){
+        return;
+      }
+      else{
+        checkbox.checked = true;
+        toggleCheckboxAndSave(checkbox); // Update localStorage for each checkbox
+      }
+      
+    });
+  });
+
+  fishDiv.appendChild(checkAllButton);
 }
 
 const container = document.querySelector('.custom-container');
@@ -2363,10 +2373,9 @@ const ctx = document.getElementById('fishChart').getContext('2d');
       }
 
         createChart();
-        addBarsFromDropdown(); // Add bars on page load
+        addBarsFromDropdown();
         updateBarsFromCheckboxes();
 
-        // Listen for checkbox changes and update bars accordingly
         document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
             checkbox.addEventListener('change', updateBarsFromCheckboxes);
         });
@@ -2376,7 +2385,6 @@ const ctx = document.getElementById('fishChart').getContext('2d');
           modal.style.display = 'block';
       }
 
-      // Hide the chart modal
       function hideChart() {
           const modal = document.getElementById('chartModal');
           modal.style.display = 'none';
@@ -2399,6 +2407,7 @@ const ctx = document.getElementById('fishChart').getContext('2d');
           for (const fishName in fish[`${location}`][`${sublocation}`]) {
           if (fish[`${location}`][`${sublocation}`].hasOwnProperty(fishName)) {
               const fishObject = fish[`${location}`][`${sublocation}`][fishName];
+              templateDiv.id = "fish-div" + fishName;
               const clonedDiv = templateDiv.cloneNode(true);
               
           // Create a <strong> element for the fish name to make it bold
@@ -2407,6 +2416,7 @@ const ctx = document.getElementById('fishChart').getContext('2d');
       
           // Append the fish name element and a line break for spacing
           clonedDiv.appendChild(fishNameElement);
+          createCheckAllForFishButton(clonedDiv)
           clonedDiv.appendChild(document.createElement("br"));
       
           // Create a div for the mutation group
@@ -2508,10 +2518,17 @@ const ctx = document.getElementById('fishChart').getContext('2d');
           container.appendChild(clonedDiv);
           }
         }
-        
+        updateBarsFromCheckboxes();
       }
       
-      
+      const checkboxes = document.querySelectorAll("input[type='checkbox']");
+checkboxes.forEach((checkbox) => {
+  checkbox.addEventListener("change", function () {
+    toggleCheckboxAndSave(checkbox);
+    updateBarsFromCheckboxes();
+  });
+});
+
       locationDropdown.addEventListener('change', () => {
         const selectedValue = locationDropdown.value;
         if (selectedValue === 'option1') {
@@ -2687,13 +2704,11 @@ const ctx = document.getElementById('fishChart').getContext('2d');
         }
       });
 
-      // Function to save the selected option to localStorage
       function saveSelectedOption() {
         const selectedOption = locationDropdown.value;
         localStorage.setItem("selectedOption", selectedOption);
     }
 
-    // Function to load the selected option from localStorage
     function loadSelectedOption() {
         const selectedOption = localStorage.getItem("selectedOption");
         if (selectedOption) {
@@ -2701,6 +2716,37 @@ const ctx = document.getElementById('fishChart').getContext('2d');
         }
     }
 
-    // Attach event listeners to save and load the selected option
+    const downloadButton = document.getElementById("downloadButton");
+    downloadButton.addEventListener("click", () => {
+        const dataToSave = JSON.stringify(localStorage);
+        const blob = new Blob([dataToSave], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "localStorageData.json";
+        a.click();
+    });
+
+    const importInput = document.getElementById("importInput");
+    const importButton = document.getElementById("importButton");
+    importButton.addEventListener("click", () => {
+        importInput.click();
+    });
+
+    importInput.addEventListener("change", () => {
+        const file = importInput.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const importedData = JSON.parse(e.target.result);
+                for (const key in importedData) {
+                    localStorage.setItem(key, importedData[key]);
+                }
+                alert("Data imported successfully. Please refresh the page.");
+            };
+            reader.readAsText(file);
+        }
+    });
+
     dropdown.addEventListener("change", saveSelectedOption);
     window.addEventListener("load", loadSelectedOption);

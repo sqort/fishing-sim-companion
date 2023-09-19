@@ -130,11 +130,53 @@
         font-size: 20px;
         padding: 5px 5px;
     }
+    .scrolling-block {
+      position: fixed;
+      top: 35%;
+      left: 40px;
+      width: 30%;
+      background-color: #000000;
+      padding: 10px;
+      border: 1px solid #8b0000;
+      max-height: 100%;
+    }
+    .importer {
+      position: fixed;
+      top: 70%;
+      left: 40px;
+      width: 30%;
+      background-color: #000000;
+      padding: 10px;
+      border: 1px solid #8b0000;
+      max-height: 100%;
+    }
 </style>
 </head>
 
 <body>
-
+    <div class="scrolling-block">
+        <p><strong><center>Instructions</center></strong></p>
+        Fill out the list with the fish you've caught by click the checkboxes next to them. <br>
+        <img src = "https://cdn.discordapp.com/attachments/1113596496617685124/1153738699155177542/image.png"> <br>
+        The box underlined in blue will check every size for every mutation for that fish, excluding the Midas variant. <br>
+        <img src = "https://cdn.discordapp.com/attachments/1113596496617685124/1153738786971320381/image.png"> <br>
+        The box underlined in red will check every size for that specific mutation. <br>
+        When you have filled out all the fish you've caught for a location, make sure to click the <img src = "https://cdn.discordapp.com/attachments/1113596496617685124/1153739556013736048/image.png"> button. <br>
+        This will update the bar graph for that location. Make sure you do this any time you are done adding fish!
+      </div>
+      <div class="importer">
+        <p><strong><center>Data</center></strong></p>
+        <center>
+            <p>Use this block here to save your data to a local file in case you would like to share it with another device, or in case you need to clear your browser data and want to save the boxes you ticked.</p>
+            <button id="downloadButton">Download Data</button>
+            <br>
+            <br>
+            <input type="file" id="importInput">
+            <br>
+            <br>
+            <button id="importButton">Import Data</button>
+        </center>
+      </div>
 <center>
 <img src="https://static.wikia.nocookie.net/fishingsimulator/images/e/e6/Site-logo.png">
 <h1>Companion!</h1>
@@ -167,6 +209,9 @@
     <button onclick="showChart()">Show Chart</button>
 
     <button onclick="saveDataToLocalStorage()">Save Data (if you keep losing it on reload)</button>
+
+    <br>
+    <button onclick = "updateBarsFromCheckboxes()">Update current location graph</button>
 
     <div id="chartModal" class="modal">
         <div class="modal-content">
