@@ -2294,6 +2294,91 @@ const ctx = document.getElementById('fishChart').getContext('2d');
             }]
         };
 
+const ctxDonut = document.getElementById('donutChart').getContext('2d');
+let donutChart;
+const dataDonut = {
+    labels: [],
+    datasets: [{
+        label: 'Fish Caught',
+        data: [],
+        backgroundColor: "blue",
+        borderColor: 'white',
+        borderWidth: 2
+    }]
+};
+
+function createDonutChart() {
+    donutChart = new Chart(ctxDonut, {
+        type: 'doughnut',
+        data: data,
+        options: {
+            cutout: '70%', // Adjust the size of the center hole (optional)
+            responsive: true,
+            maintainAspectRatio: false,
+        }
+    });
+}
+        
+function updateDonutChart() {
+  const checkboxes = document.querySelectorAll('.checkbox');
+  const labels = [];
+
+  checkboxes.forEach((checkbox, index) => {
+      if (checkbox.checked) {
+          labels.push(`Section ${index + 1}`);
+      }
+  });
+
+  data.labels = labels;
+  data.datasets[0].data = labels.map(() => 1);
+
+  donutChart.update();
+}
+
+function addSection() {
+  const checkboxes = document.querySelectorAll('.checkbox');
+  const newSectionNumber = checkboxes.length + 1;
+  const newSectionLabel = `Section ${newSectionNumber}`;
+
+  checkboxes.forEach(checkbox => {
+      checkbox.checked = true;
+  });
+
+  if (!data.labels.includes(newSectionLabel)) {
+      data.labels.push(newSectionLabel);
+      data.datasets[0].data.push(1);
+
+      donutChart.update();
+  }
+}
+
+
+
+function addSectionsFromDropdown() {
+
+  for (let i = 0; i < locationDropdown.options.length; i++) {
+      const option = locationDropdown.options[i];
+      const optionLabel = option.text;
+
+      if (!data.labels.includes(optionLabel)) {
+        data.labels.push(optionLabel);
+          const savedAmount = localStorage.getItem(optionLabel);
+          data.datasets[0].data.push(savedAmount ? parseInt(savedAmount) : 0);
+          saveDataToLocalStorage();
+      }
+  }
+
+  // Update the chart
+  donutChart.update();
+}
+
+createDonutChart();
+addSectionsFromDropdown();
+updateDonutChart(); // Update the chart on page load
+
+document.querySelectorAll('.checkbox').forEach(checkbox => {
+  checkbox.addEventListener('change', updateDonutChart);
+});
         function createChart() {
             barChart = new Chart(ctx, {
                 type: 'bar',
