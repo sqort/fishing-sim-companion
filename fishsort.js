@@ -2227,24 +2227,16 @@ let fishCaught = 0;
 const locationDropdown = document.getElementById("dropdown");
 
 // Function to set a single cookie with checkbox statuses
-function setCheckboxCookie(checkboxStatuses) {
-    const jsonCheckboxStatuses = JSON.stringify(checkboxStatuses);
-    document.cookie = "checkboxStatuses=" + jsonCheckboxStatuses + "; path=/";
-  }
-  
-  // Function to get the checkbox statuses from the cookie
+// Function to set checkbox statuses in localStorage
+function setCheckboxStatuses(checkboxStatuses) {
+  localStorage.setItem("checkboxStatuses", JSON.stringify(checkboxStatuses));
+}
+
+// Function to get checkbox statuses from localStorage
 function getCheckboxStatuses() {
-    const cookies = document.cookie.split(';');
-    for (const cookie of cookies) {
-      const parts = cookie.split('=');
-      const cookieName = parts[0].trim();
-      if (cookieName === "checkboxStatuses") {
-        const jsonCheckboxStatuses = parts[1];
-        return JSON.parse(jsonCheckboxStatuses);
-      }
-    }
-    return {};
-  }
+  const storedData = localStorage.getItem("checkboxStatuses");
+  return JSON.parse(storedData) || {}; // Return an empty object if no data is found
+}
 
 
 
@@ -2423,7 +2415,7 @@ const ctx = document.getElementById('fishChart').getContext('2d');
                   // Add a click event listener to update the checkbox statuses and the cookie
                   checkbox.addEventListener("click", function () {
                     checkboxStatuses[checkboxKey] = checkbox.checked;
-                    setCheckboxCookie(checkboxStatuses);
+                    setCheckboxStatuses(checkboxStatuses);
                   });
           }
           
