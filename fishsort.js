@@ -2242,6 +2242,14 @@ function getCheckboxStatuses() {
 
 const container = document.querySelector('.custom-container');
 
+function checkAllCheckboxesInDiv(divId) {
+  const div = document.getElementById(divId);
+  const checkboxes = div.querySelectorAll("input[type='checkbox']");
+  checkboxes.forEach((checkbox) => {
+    checkbox.checked = true;
+  });
+}
+
 
 const ctx = document.getElementById('fishChart').getContext('2d');
         let barChart;
@@ -2386,15 +2394,25 @@ const ctx = document.getElementById('fishChart').getContext('2d');
           const mutationDiv = document.createElement("div");
           mutationDiv.appendChild(document.createTextNode("Mutations")); // Name for the mutation group
           mutationDiv.appendChild(document.createElement("br")); // Add a line break for spacing
-      
+          
+          // Create a button to tick all boxed for a group so ur fingers don't hurt LOL
+          
+          
+
           // Iterate through the mutations for the current fish
           for (const mutationName in fishObject.mutations) {
               if (fishObject.mutations.hasOwnProperty(mutationName)) {
                 const mutationSizes = fishObject.mutations[mutationName];
                 const mutationDiv = document.createElement("div");
                 mutationDiv.appendChild(document.createTextNode(mutationName));
+                mutationDiv.id = "mutDiv" + mutationName;
                 mutationDiv.appendChild(document.createElement("br")); // Add a line break for spacing
-        
+                const checkButton = document.createElement("button");
+                checkButton.className = "tickallbutton";
+                checkButton.addEventListener("click", function () {
+                  checkAllCheckboxesInDiv("mutDiv" + mutationName);
+                });
+                
                 // Iterate through the sizes for the current mutation
                 for (const size of mutationSizes) {
                   const checkbox = document.createElement("input");
@@ -2417,6 +2435,8 @@ const ctx = document.getElementById('fishChart').getContext('2d');
                     checkboxStatuses[checkboxKey] = checkbox.checked;
                     setCheckboxStatuses(checkboxStatuses);
                   });
+                mutationDiv.appendChild(document.createElement("br"));
+                mutationDiv.appendChild(checkButton);
           }
           
       
@@ -2568,4 +2588,90 @@ const ctx = document.getElementById('fishChart').getContext('2d');
           updateBarsFromCheckboxes();
         }
       });
-      
+      document.addEventListener('DOMContentLoaded', () => {
+        const selectedValue = locationDropdown.value;
+        if (selectedValue === 'option1') {
+          loadData("Port Jackson", "Outer Waters");
+          updateBarsFromCheckboxes();
+        } 
+        else if (selectedValue === 'option2') {
+          loadData("Port Jackson", "SFA");
+          updateBarsFromCheckboxes();
+        }
+        else if (selectedValue === 'option3') {
+          loadData("Eruption Island", "Outer Waters");
+          updateBarsFromCheckboxes();
+        }
+        else if (selectedValue === 'option4') {
+          loadData("Eruption Island", "Normal Magma");
+          updateBarsFromCheckboxes();
+        }
+        else if (selectedValue === 'option5') {
+          loadData("Eruption Island", "SFA");
+          updateBarsFromCheckboxes();
+        }
+        else if (selectedValue === 'option6') {
+          loadData("Shadow Isles", "Outer Waters");
+          updateBarsFromCheckboxes();
+        }
+        else if (selectedValue === 'option7') {
+          loadData("Shadow Isles", "SFA");
+          updateBarsFromCheckboxes();
+        }
+        else if (selectedValue === 'option8') {
+          loadData("Ancient Shores", "Outer Waters");
+          updateBarsFromCheckboxes();
+        }
+        else if (selectedValue === 'option9') {
+          loadData("Ancient Shores", "The River");
+          updateBarsFromCheckboxes();
+        }
+        else if (selectedValue === 'option10') {
+          loadData("Ancient Shores", "SFA");
+          updateBarsFromCheckboxes();
+        }
+        else if (selectedValue === 'option11') {
+          loadData("Pharaoh's Dunes", "Outer Waters");
+          updateBarsFromCheckboxes();
+        }
+        else if (selectedValue === 'option12') {
+          loadData("Pharaoh's Dunes", "The Oasis");
+          updateBarsFromCheckboxes();
+        }
+        else if (selectedValue === 'option13') {
+          loadData("Pharaoh's Dunes", "SFA");
+          updateBarsFromCheckboxes();
+        }
+        else if (selectedValue === 'option14') {
+          loadData("Ocean", "CS");
+          updateBarsFromCheckboxes();
+        }
+        else if (selectedValue === 'option15') {
+          loadData("Ocean", "Overcast");
+          updateBarsFromCheckboxes();
+        }
+        else if (selectedValue === 'option16') {
+          loadData("Ocean", "Rain");
+          updateBarsFromCheckboxes();
+        }
+        else if (selectedValue === 'option17') {
+          loadData("Ocean", "Thunderstorm");
+          updateBarsFromCheckboxes();
+        }
+        else if (selectedValue === 'option18') {
+          loadData("Ocean", "Void Storm");
+          updateBarsFromCheckboxes();
+        }
+        else if (selectedValue === 'option19') {
+          loadData("Ocean", "Void Storm Pond");
+          updateBarsFromCheckboxes();
+        }
+        else if (selectedValue === 'option20') {
+          loadData("Monster's Borough", "Normal");
+          updateBarsFromCheckboxes();
+        }
+        else if (selectedValue === 'option21') {
+          loadData("Monster's Borough", "Candy Bait");
+          updateBarsFromCheckboxes();
+        }
+      });
