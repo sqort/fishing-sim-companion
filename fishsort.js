@@ -1163,7 +1163,7 @@ mutations: {
         }
                 },
                 "Ice Cream Carp":{
-                    fishName: "Gummy Goby",
+                    fishName: "Ice Cream Carp",
                      
                     rarity: "Rare",
                      
