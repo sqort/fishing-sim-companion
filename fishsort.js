@@ -2223,16 +2223,6 @@ mutations: {
     
     }
 
-let fishingLocations = [
-  "Port Jackson",
-  "Eruption Isles",
-  "Shadow Isles",
-  "Ancient Shores",
-  "Pharaoh's Dunes",
-  "Monster's Borough",
-  "Ocean"
-]
-
 let fishCaught = 0;
 const locationDropdown = document.getElementById("dropdown");
 
@@ -2260,267 +2250,330 @@ function getCheckboxStatuses() {
 
 const container = document.querySelector('.custom-container');
 
+
 const ctx = document.getElementById('fishChart').getContext('2d');
-    const barChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Value'],
+        let barChart;
+        const data = {
+            labels: [],
             datasets: [{
                 label: 'Fish Caught',
-                data: [fishCaught],
-                backgroundColor: 'rgba(75, 192, 192, 0.2)', // Set the bar color
-                borderColor: 'rgba(75, 192, 192, 1)', // Set the border color
+                data: [],
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
                 borderWidth: 1
             }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
+        };
+
+        function createChart() {
+            barChart = new Chart(ctx, {
+                type: 'bar',
+                data: data,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateBarsFromCheckboxes() {
+            const selectedOption = locationDropdown.options[locationDropdown.selectedIndex];
+            
+            if (selectedOption) {
+                const optionValue = selectedOption.value;
+                const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+                const totalChecked = checkboxes.length;
+
+                // Find the index of the selected option in the labels array
+                const index = data.labels.findIndex(label => label === selectedOption.text);
+
+                if (index !== -1) {
+                    // Update the data value for the selected option
+                    data.datasets[0].data[index] = totalChecked;
+
+                    // Update the chart
+                    barChart.update();
+                    saveDataToLocalStorage();
                 }
             }
         }
-    });
 
+        function addBar() {
+            const selectedOption = locationDropdown.options[locationDropdown.selectedIndex];
 
+            if (selectedOption) {
+                const optionLabel = selectedOption.text;
 
+                if (!data.labels.includes(optionLabel)) {
+                    data.labels.push(optionLabel); // Label the bar with the option name
+                    data.datasets[0].data.push(0); // Initialize the data value to 0
 
-function addFishToChart(loc){
-  fishCaught = `${fishCaught}` + `${loc}`;
-  fishCaught++;
-  return fishCaught;
-}
-function removeFishFromChart(loc){
-  fishCaught = `${fishCaught}` + `${loc}`;
-  fishCaught--;
-  return fishCaught;
-}
+                    // Update the chart
+                    barChart.update();
+                    saveDataToLocalStorage();
+                }
+            }
+        }
 
-function addBar(barName) {
-  const newData = fishCaught;
-  // Create a unique label for the new bar
-  const newLabel = barName;
+        function addBarsFromDropdown() {
 
-  // Add the new data and label to the chart
-  barChart.data.labels.push(newLabel);
-  barChart.data.datasets.push({
-      label: newLabel,
-      data: [newData],
-      backgroundColor: 'rgba(75, 192, 192, 0.2)',
-      borderColor: 'rgba(75, 192, 192, 1)',
-      borderWidth: 1
-  });
+          for (let i = 0; i < locationDropdown.options.length; i++) {
+              const option = locationDropdown.options[i];
+              const optionLabel = option.text;
 
-  // Update the chart
-  barChart.update();
-}
+              if (!data.labels.includes(optionLabel)) {
+                  data.labels.push(optionLabel); // Label the bar with the option name
+                  const savedAmount = localStorage.getItem(optionLabel); // Try to get saved amount from localStorage
+                  data.datasets[0].data.push(savedAmount ? parseInt(savedAmount) : 0); // Initialize the data value to the saved amount or 0
+                  saveDataToLocalStorage();
+              }
+          }
 
-function loadData(location, sublocation){
-    container.innerHTML = "";
+          // Update the chart
+          barChart.update();
+      }
 
-    const templateDiv = document.createElement("div");
-    templateDiv.className = "fish-div";
-    // Create a template div element for mutations
-    const mutationDivTemplate = document.createElement("div");
-    mutationDivTemplate.className = "mutation-div";
+        function saveDataToLocalStorage() {
+          data.labels.forEach(label => {
+              const index = data.labels.indexOf(label);
+              const value = data.datasets[0].data[index];
+              localStorage.setItem(label, value);
+          });
+      }
 
-    // Get the checkbox statuses from the cookie
-    const checkboxStatuses = getCheckboxStatuses();
+        createChart();
+        addBarsFromDropdown(); // Add bars on page load
+        updateBarsFromCheckboxes();
 
-    // Iterate through the fish data and clone the template for each fish name
-    for (const fishName in fish[`${location}`][`${sublocation}`]) {
-    if (fish[`${location}`][`${sublocation}`].hasOwnProperty(fishName)) {
-        const fishObject = fish[`${location}`][`${sublocation}`][fishName];
-        const clonedDiv = templateDiv.cloneNode(true);
+        // Listen for checkbox changes and update bars accordingly
+        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', updateBarsFromCheckboxes);
+        });
+
+      function showChart() {
+          const modal = document.getElementById('chartModal');
+          modal.style.display = 'block';
+      }
+
+      // Hide the chart modal
+      function hideChart() {
+          const modal = document.getElementById('chartModal');
+          modal.style.display = 'none';
+      }
+
         
-    // Create a <strong> element for the fish name to make it bold
-    const fishNameElement = document.createElement("strong");
-    fishNameElement.appendChild(document.createTextNode(fishObject.fishName));
-
-    // Append the fish name element and a line break for spacing
-    clonedDiv.appendChild(fishNameElement);
-    clonedDiv.appendChild(document.createElement("br"));
-
-    // Create a div for the mutation group
-    const mutationDiv = document.createElement("div");
-    mutationDiv.appendChild(document.createTextNode("Mutations")); // Name for the mutation group
-    mutationDiv.appendChild(document.createElement("br")); // Add a line break for spacing
-
-    // Iterate through the mutations for the current fish
-    for (const mutationName in fishObject.mutations) {
-        if (fishObject.mutations.hasOwnProperty(mutationName)) {
-          const mutationSizes = fishObject.mutations[mutationName];
+      function loadData(location, sublocation){
+          container.innerHTML = "";
+      
+          const templateDiv = document.createElement("div");
+          templateDiv.className = "fish-div";
+          // Create a template div element for mutations
+          const mutationDivTemplate = document.createElement("div");
+          mutationDivTemplate.className = "mutation-div";
+      
+          // Get the checkbox statuses from the cookie
+          const checkboxStatuses = getCheckboxStatuses();
+      
+          // Iterate through the fish data and clone the template for each fish name
+          for (const fishName in fish[`${location}`][`${sublocation}`]) {
+          if (fish[`${location}`][`${sublocation}`].hasOwnProperty(fishName)) {
+              const fishObject = fish[`${location}`][`${sublocation}`][fishName];
+              const clonedDiv = templateDiv.cloneNode(true);
+              
+          // Create a <strong> element for the fish name to make it bold
+          const fishNameElement = document.createElement("strong");
+          fishNameElement.appendChild(document.createTextNode(fishObject.fishName));
+      
+          // Append the fish name element and a line break for spacing
+          clonedDiv.appendChild(fishNameElement);
+          clonedDiv.appendChild(document.createElement("br"));
+      
+          // Create a div for the mutation group
           const mutationDiv = document.createElement("div");
-          mutationDiv.appendChild(document.createTextNode(mutationName));
+          mutationDiv.appendChild(document.createTextNode("Mutations")); // Name for the mutation group
           mutationDiv.appendChild(document.createElement("br")); // Add a line break for spacing
-  
-          // Iterate through the sizes for the current mutation
-          for (const size of mutationSizes) {
-            const checkbox = document.createElement("input");
-            checkbox.type = "checkbox";
-            checkbox.name = `${fishName}-${mutationName}-${size}`;
-            checkbox.value = size;
-            checkbox.id = `${fishName}-${mutationName}-${size}`;
-            const label = document.createElement("label");
-            label.innerHTML = size;
-            mutationDiv.appendChild(checkbox);
-            mutationDiv.appendChild(label);
-  
-  
-            // Check the checkbox based on the stored checkbox statuses
-          const checkboxKey = `${fishName}-${mutationName}-${size}`;
-          checkbox.checked = checkboxStatuses[checkboxKey] === true;
-  
-            // Add a click event listener to update the checkbox statuses and the cookie
-            checkbox.addEventListener("click", function () {
-              checkboxStatuses[checkboxKey] = checkbox.checked;
-              setCheckboxCookie(checkboxStatuses);
-            });
-
-            // Add an event listener to the checkbox
-          checkbox.addEventListener('change', function() {
-          // Check if the checkbox is checked
-          if (checkbox.checked) {
-              // Increase the value by one
-              addFishToChart(location);
-          } else {
-              // Decrease the value by one if the checkbox is unchecked
-              removeFishFromChart(location);
+      
+          // Iterate through the mutations for the current fish
+          for (const mutationName in fishObject.mutations) {
+              if (fishObject.mutations.hasOwnProperty(mutationName)) {
+                const mutationSizes = fishObject.mutations[mutationName];
+                const mutationDiv = document.createElement("div");
+                mutationDiv.appendChild(document.createTextNode(mutationName));
+                mutationDiv.appendChild(document.createElement("br")); // Add a line break for spacing
+        
+                // Iterate through the sizes for the current mutation
+                for (const size of mutationSizes) {
+                  const checkbox = document.createElement("input");
+                  checkbox.type = "checkbox";
+                  checkbox.name = `${fishName}-${mutationName}-${size}`;
+                  checkbox.value = size;
+                  checkbox.id = `${fishName}-${mutationName}-${size}`;
+                  const label = document.createElement("label");
+                  label.innerHTML = size;
+                  mutationDiv.appendChild(checkbox);
+                  mutationDiv.appendChild(label);
+        
+        
+                  // Check the checkbox based on the stored checkbox statuses
+                const checkboxKey = `${fishName}-${mutationName}-${size}`;
+                checkbox.checked = checkboxStatuses[checkboxKey] === true;
+        
+                  // Add a click event listener to update the checkbox statuses and the cookie
+                  checkbox.addEventListener("click", function () {
+                    checkboxStatuses[checkboxKey] = checkbox.checked;
+                    setCheckboxCookie(checkboxStatuses);
+                  });
           }
           
-          // Update the chart with the new value
-          addBar(location);
-      });
-    }
-    
-
-    // Change the color based on rarity
-    switch (fishObject.rarity) {
-        case "Common":
-          clonedDiv.classList.add("common");
-          break;
-        case "Uncommon":
-          clonedDiv.classList.add("uncommon");
-          break;
-        case "Rare":
-          clonedDiv.classList.add("rare");
-          break;
-        case "Epic":
-          clonedDiv.classList.add("epic");
-          break;
-        case "Legendary":
-          clonedDiv.classList.add("legendary");
-          break;
-        case "Mythic":
-            clonedDiv.classList.add("mythic");
-        break; 
-        default:
-          clonedDiv.classList.add("unknown");
+      
+          // Change the color based on rarity
+          switch (fishObject.rarity) {
+              case "Common":
+                clonedDiv.classList.add("common");
+                break;
+              case "Uncommon":
+                clonedDiv.classList.add("uncommon");
+                break;
+              case "Rare":
+                clonedDiv.classList.add("rare");
+                break;
+              case "Epic":
+                clonedDiv.classList.add("epic");
+                break;
+              case "Legendary":
+                clonedDiv.classList.add("legendary");
+                break;
+              case "Mythic":
+                  clonedDiv.classList.add("mythic");
+              break; 
+              default:
+                clonedDiv.classList.add("unknown");
+              }
+              
+          
+            clonedDiv.appendChild(mutationDiv);
+            clonedDiv.appendChild(document.createElement("br"));
+      
+            
+          }
+      }
+          // Create a "Midas" checkbox and label
+          const midasCheckbox = document.createElement("input");
+          midasCheckbox.type = "checkbox";
+          midasCheckbox.name = `${fishName}-Midas`;
+          midasCheckbox.value = "Midas";
+          midasCheckbox.id = `${fishName}-Midas`;
+          const midasLabel = document.createElement("label");
+          midasLabel.innerHTML = "Midas";
+          clonedDiv.appendChild(midasCheckbox);
+          clonedDiv.appendChild(midasLabel);
+      
+          // Check the "Midas" checkbox based on the stored checkbox statuses
+          const midasCheckboxKey = `${fishName}-Midas`;
+          midasCheckbox.checked = checkboxStatuses[midasCheckboxKey] === true;
+      
+          // Add a click event listener to update the checkbox statuses and the cookie for "Midas" checkbox
+          midasCheckbox.addEventListener("click", function () {
+          checkboxStatuses[midasCheckboxKey] = midasCheckbox.checked;
+          setCheckboxCookie(checkboxStatuses);
+          });
+      
+          
+      
+          container.appendChild(clonedDiv);
+          }
         }
         
-    
-      clonedDiv.appendChild(mutationDiv);
-      clonedDiv.appendChild(document.createElement("br"));
-
+      }
       
-    }
-}
-    // Create a "Midas" checkbox and label
-    const midasCheckbox = document.createElement("input");
-    midasCheckbox.type = "checkbox";
-    midasCheckbox.name = `${fishName}-Midas`;
-    midasCheckbox.value = "Midas";
-    midasCheckbox.id = `${fishName}-Midas`;
-    const midasLabel = document.createElement("label");
-    midasLabel.innerHTML = "Midas";
-    clonedDiv.appendChild(midasCheckbox);
-    clonedDiv.appendChild(midasLabel);
-
-    // Check the "Midas" checkbox based on the stored checkbox statuses
-    const midasCheckboxKey = `${fishName}-Midas`;
-    midasCheckbox.checked = checkboxStatuses[midasCheckboxKey] === true;
-
-    // Add a click event listener to update the checkbox statuses and the cookie for "Midas" checkbox
-    midasCheckbox.addEventListener("click", function () {
-    checkboxStatuses[midasCheckboxKey] = midasCheckbox.checked;
-    setCheckboxCookie(checkboxStatuses);
-    });
-
-    
-
-    container.appendChild(clonedDiv);
-    }
-  }
-}
-
-
-locationDropdown.addEventListener('change', () => {
-  const selectedValue = locationDropdown.value;
-  if (selectedValue === 'option1') {
-    loadData("Port Jackson", "Outer Waters");
-  } 
-  else if (selectedValue === 'option2') {
-    loadData("Port Jackson", "SFA");
-  }
-  else if (selectedValue === 'option3') {
-    loadData("Eruption Island", "Outer Waters");
-  }
-  else if (selectedValue === 'option4') {
-    loadData("Eruption Island", "Normal Magma");
-  }
-  else if (selectedValue === 'option5') {
-    loadData("Eruption Island", "SFA");
-  }
-  else if (selectedValue === 'option6') {
-    loadData("Shadow Isles", "Outer Waters");
-  }
-  else if (selectedValue === 'option7') {
-    loadData("Shadow Isles", "SFA");
-  }
-  else if (selectedValue === 'option8') {
-    loadData("Ancient Shores", "Outer Waters");
-  }
-  else if (selectedValue === 'option9') {
-    loadData("Ancient Shores", "The River");
-  }
-  else if (selectedValue === 'option10') {
-    loadData("Ancient Shores", "SFA");
-  }
-  else if (selectedValue === 'option11') {
-    loadData("Pharaoh's Dunes", "Outer Waters");
-  }
-  else if (selectedValue === 'option12') {
-    loadData("Pharaoh's Dunes", "The Oasis");
-  }
-  else if (selectedValue === 'option13') {
-    loadData("Pharaoh's Dunes", "SFA");
-  }
-  else if (selectedValue === 'option14') {
-    loadData("Ocean", "CS");
-  }
-  else if (selectedValue === 'option15') {
-    loadData("Ocean", "Overcast");
-  }
-  else if (selectedValue === 'option16') {
-    loadData("Ocean", "Rain");
-  }
-  else if (selectedValue === 'option17') {
-    loadData("Ocean", "Thunderstorm");
-  }
-  else if (selectedValue === 'option18') {
-    loadData("Ocean", "Void Storm");
-  }
-  else if (selectedValue === 'option19') {
-    loadData("Ocean", "Void Storm Pond");
-  }
-  else if (selectedValue === 'option20') {
-    loadData("Monster's Borough", "Normal");
-  }
-  else if (selectedValue === 'option21') {
-    loadData("Monster's Borough", "Candy Bait");
-  }
-  else if (selectedValue === 'default') {
-    container.innerHTML = "";
-  }
-});
-
+      
+      locationDropdown.addEventListener('change', () => {
+        const selectedValue = locationDropdown.value;
+        if (selectedValue === 'option1') {
+          loadData("Port Jackson", "Outer Waters");
+          updateBarsFromCheckboxes();
+        } 
+        else if (selectedValue === 'option2') {
+          loadData("Port Jackson", "SFA");
+          updateBarsFromCheckboxes();
+        }
+        else if (selectedValue === 'option3') {
+          loadData("Eruption Island", "Outer Waters");
+          updateBarsFromCheckboxes();
+        }
+        else if (selectedValue === 'option4') {
+          loadData("Eruption Island", "Normal Magma");
+          updateBarsFromCheckboxes();
+        }
+        else if (selectedValue === 'option5') {
+          loadData("Eruption Island", "SFA");
+          updateBarsFromCheckboxes();
+        }
+        else if (selectedValue === 'option6') {
+          loadData("Shadow Isles", "Outer Waters");
+          updateBarsFromCheckboxes();
+        }
+        else if (selectedValue === 'option7') {
+          loadData("Shadow Isles", "SFA");
+          updateBarsFromCheckboxes();
+        }
+        else if (selectedValue === 'option8') {
+          loadData("Ancient Shores", "Outer Waters");
+          updateBarsFromCheckboxes();
+        }
+        else if (selectedValue === 'option9') {
+          loadData("Ancient Shores", "The River");
+          updateBarsFromCheckboxes();
+        }
+        else if (selectedValue === 'option10') {
+          loadData("Ancient Shores", "SFA");
+          updateBarsFromCheckboxes();
+        }
+        else if (selectedValue === 'option11') {
+          loadData("Pharaoh's Dunes", "Outer Waters");
+          updateBarsFromCheckboxes();
+        }
+        else if (selectedValue === 'option12') {
+          loadData("Pharaoh's Dunes", "The Oasis");
+          updateBarsFromCheckboxes();
+        }
+        else if (selectedValue === 'option13') {
+          loadData("Pharaoh's Dunes", "SFA");
+          updateBarsFromCheckboxes();
+        }
+        else if (selectedValue === 'option14') {
+          loadData("Ocean", "CS");
+          updateBarsFromCheckboxes();
+        }
+        else if (selectedValue === 'option15') {
+          loadData("Ocean", "Overcast");
+          updateBarsFromCheckboxes();
+        }
+        else if (selectedValue === 'option16') {
+          loadData("Ocean", "Rain");
+          updateBarsFromCheckboxes();
+        }
+        else if (selectedValue === 'option17') {
+          loadData("Ocean", "Thunderstorm");
+          updateBarsFromCheckboxes();
+        }
+        else if (selectedValue === 'option18') {
+          loadData("Ocean", "Void Storm");
+          updateBarsFromCheckboxes();
+        }
+        else if (selectedValue === 'option19') {
+          loadData("Ocean", "Void Storm Pond");
+          updateBarsFromCheckboxes();
+        }
+        else if (selectedValue === 'option20') {
+          loadData("Monster's Borough", "Normal");
+          updateBarsFromCheckboxes();
+        }
+        else if (selectedValue === 'option21') {
+          loadData("Monster's Borough", "Candy Bait");
+          updateBarsFromCheckboxes();
+        }
+      });
+      

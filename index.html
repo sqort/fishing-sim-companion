@@ -4,6 +4,27 @@
 <head>
 <title>Fishing Simulator Companion</title>
 <style>
+    .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 9999;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            position: absolute;
+            top: 10%; /* Adjust vertical positioning */
+            left: 10%; /* Adjust horizontal positioning */
+            width: 80%; /* Adjust modal width */
+            height: 80%; /* Adjust modal height */
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+        }
     #list
     {
         border-color: black;
@@ -116,7 +137,6 @@
 <h2>This site is a WORK IN PROGRESS!</h2>
 <div>please DM sqort on discord if there are any bugs you encounter</div>
     <select id="dropdown">
-        <option value="default">Select a Location</option>
         <option value="option1">Port Jackson: Outer Waters</option>
         <option value="option2">Port Jackson: SFA</option>
         <option value="option3">Eruption Isles: Outer Waters</option>
@@ -139,16 +159,23 @@
         <option value="option20">Monster's Borough: Normal</option>
         <option value="option21">Monster's Borough: Candy Bait</option>
     </select>
-    
-    <div id="content-div">
-    
+    <br>
+    <button onclick="showChart()">Show Chart</button>
+
+    <button onclick="saveDataToLocalStorage()">Save Data (if you keep losing it on reload)</button>
+
+    <div id="chartModal" class="modal">
+        <div class="modal-content">
+            <canvas id="fishChart" width="400" height="200"></canvas>
+            <button onclick="hideChart()">Close</button>
+        </div>
     </div>
 
     <div class="custom-container">
     </div>
 
-    <h1>Fish Variants Caught</h1>
-    <canvas id="fishChart" width="400" height="200"></canvas>
+
+   
 
 </center>
 <br>
