@@ -2225,7 +2225,7 @@ mutations: {
             "Mahogany Snapper":{
                 fishName: "Mahogany Snapper",
                  
-                rarity: "common",
+                rarity: "Common",
                  
                 midas: ["Yes","No"],
 
@@ -2243,7 +2243,7 @@ mutations: {
             "Pirate Perch":{
               fishName: "Pirate Perch",
                
-              rarity: "uncommon",
+              rarity: "Uncommon",
                
               midas: ["Yes","No"],
 
@@ -2261,7 +2261,7 @@ mutations: {
           "French Grunt":{
             fishName: "French Grunt",
              
-            rarity: "rare",
+            rarity: "Rare",
              
             midas: ["Yes","No"],
 
@@ -2279,7 +2279,7 @@ mutations: {
         "Bar Jack":{
           fishName: "Bar Jack",
            
-          rarity: "legendary",
+          rarity: "Legendary",
            
           midas: ["Yes","No"],
 
@@ -2297,7 +2297,7 @@ mutations: {
       "Nassau Grouper":{
         fishName: "Nassau Grouper",
          
-        rarity: "mythic",
+        rarity: "Mythic",
          
         midas: ["Yes","No"],
 
@@ -2318,7 +2318,7 @@ mutations: {
         "Glassy Sweeper":{
           fishName: "Glassy Sweeper",
            
-          rarity: "common",
+          rarity: "Common",
            
           midas: ["Yes","No"],
   
@@ -2336,7 +2336,7 @@ mutations: {
       "Chromis":{
         fishName: "Chromis",
          
-        rarity: "rare",
+        rarity: "Rare",
          
         midas: ["Yes","No"],
 
@@ -2354,7 +2354,7 @@ mutations: {
     "Gray Snapper":{
       fishName: "Gray Snapper",
        
-      rarity: "epic",
+      rarity: "Epic",
        
       midas: ["Yes","No"],
 
@@ -2372,7 +2372,7 @@ mutations: {
     "Octopus":{
       fishName: "Octopus",
       
-      rarity: "legendary",
+      rarity: "Legendary",
       
       midas: ["Yes","No"],
 
@@ -2390,7 +2390,7 @@ mutations: {
     "Sand Diver":{
       fishName: "Sand Diver",
        
-      rarity: "mythic",
+      rarity: "Mythic",
        
       midas: ["Yes","No"],
   
@@ -2410,7 +2410,7 @@ mutations: {
         "Black Sea Bass":{
           fishName: "Black Sea Bass",
           
-          rarity: "rare",
+          rarity: "Rare",
           
           midas: ["Yes","No"],
     
@@ -2428,7 +2428,7 @@ mutations: {
         "Horse Eye Jack":{
           fishName: "Horse Eye Jack",
           
-          rarity: "epic",
+          rarity: "Epic",
           
           midas: ["Yes","No"],
     
@@ -2446,7 +2446,7 @@ mutations: {
         "Squirrel Fish":{
           fishName: "Squirrel Fish",
           
-          rarity: "legendary",
+          rarity: "Legendary",
           
           midas: ["Yes","No"],
     
@@ -2464,7 +2464,7 @@ mutations: {
         "Atlantic Tarpon":{
           fishName: "Atlantic Tarpon",
           
-          rarity: "mythic",
+          rarity: "Mythic",
           
           midas: ["Yes","No"],
     
