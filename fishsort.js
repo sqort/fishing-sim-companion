@@ -2219,10 +2219,270 @@ mutations: {
         }
                 }
             }
-        }
+        },
+        "Timeless Tides":{
+          "Smuggler's Bay":{
+            "Mahogany Snapper":{
+                fishName: "Mahogany Snapper",
+                 
+                rarity: "common",
+                 
+                midas: ["Yes","No"],
+
+                mutations: {
+                      "Normal": ["Regular", "Baby", "Small", "Large", "Huge"],
+                      "Common Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                      "Uncommon Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                      "Rare Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                      "Epic Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                      "Legendary Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                      "Mythic Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                      "Albino": ["Regular", "Baby", "Small", "Large", "Huge"],
+                    }
+            },
+            "Pirate Perch":{
+              fishName: "Pirate Perch",
+               
+              rarity: "uncommon",
+               
+              midas: ["Yes","No"],
+
+              mutations: {
+                    "Normal": ["Regular", "Baby", "Small", "Large", "Huge"],
+                    "Common Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                    "Uncommon Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                    "Rare Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                    "Epic Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                    "Legendary Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                    "Mythic Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                    "Albino": ["Regular", "Baby", "Small", "Large", "Huge"],
+                  }
+          },
+          "French Grunt":{
+            fishName: "French Grunt",
+             
+            rarity: "rare",
+             
+            midas: ["Yes","No"],
+
+            mutations: {
+                  "Normal": ["Regular", "Baby", "Small", "Large", "Huge"],
+                  "Common Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                  "Uncommon Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                  "Rare Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                  "Epic Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                  "Legendary Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                  "Mythic Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                  "Albino": ["Regular", "Baby", "Small", "Large", "Huge"],
+                }
+        },
+        "Bar Jack":{
+          fishName: "Bar Jack",
+           
+          rarity: "legendary",
+           
+          midas: ["Yes","No"],
+
+          mutations: {
+                "Normal": ["Regular", "Baby", "Small", "Large", "Huge"],
+                "Common Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                "Uncommon Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                "Rare Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                "Epic Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                "Legendary Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                "Mythic Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                "Albino": ["Regular", "Baby", "Small", "Large", "Huge"],
+              }
+      },
+      "Nassau Grouper":{
+        fishName: "Nassau Grouper",
+         
+        rarity: "mythic",
+         
+        midas: ["Yes","No"],
+
+        mutations: {
+              "Normal": ["Regular", "Baby", "Small", "Large", "Huge"],
+              "Common Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+              "Uncommon Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+              "Rare Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+              "Epic Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+              "Legendary Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+              "Mythic Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+              "Albino": ["Regular", "Baby", "Small", "Large", "Huge"],
+            }
+    },
+            
+      },
+      "SFA":{
+        "Glassy Sweeper":{
+          fishName: "Glassy Sweeper",
+           
+          rarity: "common",
+           
+          midas: ["Yes","No"],
+  
+          mutations: {
+                "Normal": ["Regular", "Baby", "Small", "Large", "Huge"],
+                "Common Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                "Uncommon Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                "Rare Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                "Epic Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                "Legendary Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                "Mythic Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                "Albino": ["Regular", "Baby", "Small", "Large", "Huge"],
+              }
+      },
+      "Chromis":{
+        fishName: "Chromis",
+         
+        rarity: "rare",
+         
+        midas: ["Yes","No"],
+
+        mutations: {
+              "Normal": ["Regular", "Baby", "Small", "Large", "Huge"],
+              "Common Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+              "Uncommon Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+              "Rare Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+              "Epic Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+              "Legendary Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+              "Mythic Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+              "Albino": ["Regular", "Baby", "Small", "Large", "Huge"],
+            }
+    },
+    "Gray Snapper":{
+      fishName: "Gray Snapper",
+       
+      rarity: "epic",
+       
+      midas: ["Yes","No"],
+
+      mutations: {
+            "Normal": ["Regular", "Baby", "Small", "Large", "Huge"],
+            "Common Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+            "Uncommon Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+            "Rare Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+            "Epic Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+            "Legendary Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+            "Mythic Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+            "Albino": ["Regular", "Baby", "Small", "Large", "Huge"],
+          }
+  },
+    "Octopus":{
+      fishName: "Octopus",
+      
+      rarity: "legendary",
+      
+      midas: ["Yes","No"],
+
+      mutations: {
+            "Normal": ["Regular", "Baby", "Small", "Large", "Huge"],
+            "Common Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+            "Uncommon Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+            "Rare Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+            "Epic Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+            "Legendary Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+            "Mythic Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+            "Albino": ["Regular", "Baby", "Small", "Large", "Huge"],
+          }
+    },
+    "Sand Diver":{
+      fishName: "Sand Diver",
+       
+      rarity: "mythic",
+       
+      midas: ["Yes","No"],
+  
+      mutations: {
+            "Normal": ["Regular", "Baby", "Small", "Large", "Huge"],
+            "Common Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+            "Uncommon Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+            "Rare Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+            "Epic Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+            "Legendary Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+            "Mythic Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+            "Albino": ["Regular", "Baby", "Small", "Large", "Huge"],
+          }
+  },
+      },
+      "Ocean":{
+        "Black Sea Bass":{
+          fishName: "Black Sea Bass",
+          
+          rarity: "rare",
+          
+          midas: ["Yes","No"],
+    
+          mutations: {
+                "Normal": ["Regular", "Baby", "Small", "Large", "Huge"],
+                "Common Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                "Uncommon Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                "Rare Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                "Epic Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                "Legendary Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                "Mythic Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                "Albino": ["Regular", "Baby", "Small", "Large", "Huge"],
+              }
+        },
+        "Horse Eye Jack":{
+          fishName: "Horse Eye Jack",
+          
+          rarity: "epic",
+          
+          midas: ["Yes","No"],
+    
+          mutations: {
+                "Normal": ["Regular", "Baby", "Small", "Large", "Huge"],
+                "Common Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                "Uncommon Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                "Rare Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                "Epic Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                "Legendary Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                "Mythic Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                "Albino": ["Regular", "Baby", "Small", "Large", "Huge"],
+              }
+        },
+        "Squirrel Fish":{
+          fishName: "Squirrel Fish",
+          
+          rarity: "legendary",
+          
+          midas: ["Yes","No"],
+    
+          mutations: {
+                "Normal": ["Regular", "Baby", "Small", "Large", "Huge"],
+                "Common Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                "Uncommon Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                "Rare Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                "Epic Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                "Legendary Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                "Mythic Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                "Albino": ["Regular", "Baby", "Small", "Large", "Huge"],
+              }
+        },
+        "Atlantic Tarpon":{
+          fishName: "Atlantic Tarpon",
+          
+          rarity: "mythic",
+          
+          midas: ["Yes","No"],
+    
+          mutations: {
+                "Normal": ["Regular", "Baby", "Small", "Large", "Huge"],
+                "Common Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                "Uncommon Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                "Rare Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                "Epic Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                "Legendary Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                "Mythic Glow": ["Regular", "Baby", "Small", "Large", "Huge"],
+                "Albino": ["Regular", "Baby", "Small", "Large", "Huge"],
+              }
+        },
+      }
     
     }
-
+}
 let fishCaught = 0;
 const locationDropdown = document.getElementById("dropdown");
 
@@ -2701,6 +2961,18 @@ checkboxes.forEach((checkbox) => {
           loadData("Monster's Borough", "Candy Bait");
           updateBarsFromCheckboxes();
         }
+        else if (selectedValue === 'option22') {
+          loadData("Timeless Tides", "Smuggler's Bay");
+          updateBarsFromCheckboxes();
+        }
+        else if (selectedValue === 'option23') {
+          loadData("Timeless Tides", "SFA");
+          updateBarsFromCheckboxes();
+        }
+        else if (selectedValue === 'option24') {
+          loadData("Timeless Tides", "Ocean");
+          updateBarsFromCheckboxes();
+        }
       });
       document.addEventListener('DOMContentLoaded', () => {
         const selectedValue = locationDropdown.value;
@@ -2786,6 +3058,18 @@ checkboxes.forEach((checkbox) => {
         }
         else if (selectedValue === 'option21') {
           loadData("Monster's Borough", "Candy Bait");
+          updateBarsFromCheckboxes();
+        }
+        else if (selectedValue === 'option22') {
+          loadData("Timeless Tides", "Smuggler's Bay");
+          updateBarsFromCheckboxes();
+        }
+        else if (selectedValue === 'option23') {
+          loadData("Timeless Tides", "SFA");
+          updateBarsFromCheckboxes();
+        }
+        else if (selectedValue === 'option24') {
+          loadData("Timeless Tides", "Ocean");
           updateBarsFromCheckboxes();
         }
       });
