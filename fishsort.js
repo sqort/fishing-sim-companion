@@ -2539,7 +2539,6 @@ function createCheckAllForFishButton(fishDiv) {
 
 const container = document.querySelector('.custom-container');
 
-
 const ctx = document.getElementById('fishChart').getContext('2d');
         let barChart;
         const data = {
@@ -2547,7 +2546,6 @@ const ctx = document.getElementById('fishChart').getContext('2d');
             datasets: [{
                 label: 'Fish Caught',
                 data: [],
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
                 color: 'rgba(255, 255, 255, 1)',
                 borderColor: 'rgba(75, 192, 192, 1)',
                 borderWidth: 1
@@ -2556,16 +2554,6 @@ const ctx = document.getElementById('fishChart').getContext('2d');
 
 const ctxDonut = document.getElementById('donutChart').getContext('2d');
 let donutChart;
-const dataDonut = {
-    labels: [],
-    datasets: [{
-        label: 'Fish Caught',
-        data: [],
-        backgroundColor: "blue",
-        borderColor: 'white',
-        borderWidth: 2
-    }]
-};
 
 function createDonutChart() {
     donutChart = new Chart(ctxDonut, {
@@ -2575,6 +2563,32 @@ function createDonutChart() {
             cutout: '70%', // Adjust the size of the center hole (optional)
             responsive: true,
             maintainAspectRatio: false,
+            backgroundColor:[ 
+              "rgb(153, 75, 3)",
+              "rgb(109, 18, 62)",
+              "rgb(33, 130, 97)",
+              "rgb(25, 6, 17)",
+              "rgb(146, 150, 132)",
+              "rgb(68, 59, 79)",
+              "rgb(3, 12, 38)",
+              "rgb(22, 74, 112)",
+              "rgb(114, 243, 255)",
+              "rgb(196, 165, 9)",
+              "rgb(17, 16, 15)",
+              "rgb(83, 226, 114)",
+              "rgb(186, 169, 183)",
+              "rgb(212, 195, 224)",
+              "rgb(44, 71, 31)",
+              "rgb(25, 6, 17)",
+              "rgb(146, 150, 132)",
+              "rgb(5, 10, 99)",
+              "rgb(48, 42, 56)",
+              "rgb(178, 169, 174)",
+              "rgb(43, 10, 35)",
+              "rgb(199, 199, 201)",
+              "rgb(157, 168, 234)",
+              "rgb(92, 102, 94)"
+           ]
         }
     });
 }
@@ -2607,7 +2621,6 @@ function addSection() {
   if (!data.labels.includes(newSectionLabel)) {
       data.labels.push(newSectionLabel);
       data.datasets[0].data.push(1);
-
       donutChart.update();
   }
 }
@@ -2627,14 +2640,12 @@ function addSectionsFromDropdown() {
           saveDataToLocalStorage();
       }
   }
-
-  // Update the chart
   donutChart.update();
 }
 
 createDonutChart();
 addSectionsFromDropdown();
-updateDonutChart(); // Update the chart on page load
+updateDonutChart();
 
 document.querySelectorAll('.checkbox').forEach(checkbox => {
   checkbox.addEventListener('change', updateDonutChart);
@@ -2647,8 +2658,36 @@ document.querySelectorAll('.checkbox').forEach(checkbox => {
                     scales: {
                         y: {
                             beginAtZero: true
+                            
                         }
-                    }
+                    },
+                    backgroundColor:[ 
+                      "rgb(153, 75, 3)",
+                      "rgb(109, 18, 62)",
+                      "rgb(33, 130, 97)",
+                      "rgb(25, 6, 17)",
+                      "rgb(146, 150, 132)",
+                      "rgb(68, 59, 79)",
+                      "rgb(3, 12, 38)",
+                      "rgb(22, 74, 112)",
+                      "rgb(114, 243, 255)",
+                      "rgb(196, 165, 9)",
+                      "rgb(17, 16, 15)",
+                      "rgb(83, 226, 114)",
+                      "rgb(186, 169, 183)",
+                      "rgb(212, 195, 224)",
+                      "rgb(44, 71, 31)",
+                      "rgb(25, 6, 17)",
+                      "rgb(146, 150, 132)",
+                      "rgb(5, 10, 99)",
+                      "rgb(48, 42, 56)",
+                      "rgb(178, 169, 174)",
+                      "rgb(43, 10, 35)",
+                      "rgb(199, 199, 201)",
+                      "rgb(157, 168, 234)",
+                      "rgb(92, 102, 94)"
+                   ]
+                    
                 }
             });
         }
@@ -3097,26 +3136,11 @@ checkboxes.forEach((checkbox) => {
         a.click();
     });
 
-    const importInput = document.getElementById("importInput");
     const importButton = document.getElementById("importButton");
     importButton.addEventListener("click", () => {
         importInput.click();
     });
 
-    importInput.addEventListener("change", () => {
-        const file = importInput.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                const importedData = JSON.parse(e.target.result);
-                for (const key in importedData) {
-                    localStorage.setItem(key, importedData[key]);
-                }
-                alert("Data imported successfully. Please refresh the page.");
-            };
-            reader.readAsText(file);
-        }
-    });
 
     dropdown.addEventListener("change", saveSelectedOption);
     window.addEventListener("load", loadSelectedOption);
