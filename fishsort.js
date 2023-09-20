@@ -3137,11 +3137,25 @@ checkboxes.forEach((checkbox) => {
     });
 
     const importButton = document.getElementById("importButton");
+    const importInput = document.getElementById("importInput");
     importButton.addEventListener("click", () => {
         importInput.click();
     });
 
-
+    importInput.addEventListener("change", () => {
+      const file = importInput.files[0];
+      if (file) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+              const importedData = JSON.parse(e.target.result);
+              for (const key in importedData) {
+                  localStorage.setItem(key, importedData[key]);
+              }
+              alert("Data imported successfully. Please refresh the page.");
+          };
+          reader.readAsText(file);
+      }
+  });
     dropdown.addEventListener("change", saveSelectedOption);
     window.addEventListener("load", loadSelectedOption);
 
